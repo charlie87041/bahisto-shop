@@ -54,8 +54,11 @@ WORKDIR /var/www/html
 
 COPY --chown=${WWWUSER}:${WWWGROUP} . .
 
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY start-container.sh /usr/local/bin/start-container
+COPY --chown=${WWWUSER}:${WWWGROUP} supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY  --chown=${WWWUSER}:${WWWGROUP} start-container.sh /usr/local/bin/start-container
+
+RUN chmod +x /usr/local/bin/start-container \
+ && sed -i 's/\r$//' /usr/local/bin/start-container
 
 EXPOSE 8000
 

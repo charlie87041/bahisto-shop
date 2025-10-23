@@ -18,7 +18,7 @@ services:
             - mariadb
             - redis
             - minio
-            - mailtrap
+            - mailpit
         networks:
             - bagisto
 
@@ -120,8 +120,10 @@ services:
 
 networks:
     bagisto:
-        name: bagisto
         driver: bridge
+        ipam:
+            config:
+                - subnet: 172.30.10.0/24   # pick a range not used anywhere else
 
 volumes:
     mariadb-data:
