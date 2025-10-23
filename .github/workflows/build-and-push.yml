@@ -54,3 +54,5 @@ jobs:
           file: Dockerfile
           push: true
           tags: kanonhian/bagisto-shop:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
