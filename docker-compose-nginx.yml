@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: bagisto-nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - "${NGINX_PROXY_HTTP_PORT:-80}:80"
+      - "${NGINX_PROXY_HTTPS_PORT:-443}:443"
+      - "${NGINX_PROXY_ADMIN_PORT:-81}:81"
+    environment:
+      TZ: ${APP_TIMEZONE:-UTC}
+      DISABLE_IPV6: "true"
+    volumes:
+      - nginx-proxy-manager-data:/data
+      - nginx-proxy-manager-letsencrypt:/etc/letsencrypt
+    networks:
+      - bagisto
+
+volumes:
+  nginx-proxy-manager-data:
+  nginx-proxy-manager-letsencrypt:
+
+networks:
+  bagisto:
+    external: true
+    name: bagisto
