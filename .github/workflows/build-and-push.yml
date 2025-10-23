@@ -28,9 +28,22 @@ jobs:
           #  echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}";
           #  echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}";
           } >> .env 
+      - name: Install Laravel Dependencies
+        run: |
+          composer install --no-interaction --prefer-dist --no-progress --optimize-autoloader
+          php --ri soap >/dev/null || (echo "SOAP not enabled" && exit 1)
+          composer update --no-interaction --with-all-dependencies    
 
       - name: Generate key
         run:  php artisan key:generate
+
+      - name: Prepare Docker build context
+        run: |
+          rm -rf build-context
+          rsync -a \
+            --exclude .git \
+            --exclude build-context \
+            ./ build-context/
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -44,7 +57,7 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./build-context
           file: Dockerfile
           push: true
           tags: kanonhian/bagisto-shop:latest

@@ -1,6 +1,4 @@
 
-cp .env.develop .env
-
 composer dump-autoload --optimize
 php artisan optimize:clear
 
