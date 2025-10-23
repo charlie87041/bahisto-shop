@@ -15,6 +15,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Prepare environment file
+        run: cp .env.develop .env
+
       - name: Inject secret environment variables
         run: |
           {
