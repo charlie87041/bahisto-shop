@@ -95,24 +95,6 @@ jobs:
           fi
 
           echo "✅ .env saneado y válido (build)"
-      - name: Install PHP extensions (robust)
-        shell: bash
-        run: |
-          set -Eeuo pipefail
-          apt-get update && apt-get install -y curl git
-
-          # Instalador comunitario: resuelve dependencias y habilita .ini automáticamente
-          curl -fsSL https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions \
-            -o /usr/local/bin/install-php-extensions
-          chmod +x /usr/local/bin/install-php-extensions
-
-          # IMAP en PHP 8.4 es PECL; el instalador ya lo maneja.
-          install-php-extensions \
-            soap mbstring gd intl zip bcmath exif sockets pdo_pgsql ldap imap pcntl bcmath exif intl mbstring redis
-
-          # Verificaciones duras: si SOAP no está, falla aquí mismo
-          php --ri soap >/dev/null
-          php -m | grep -E '^soap$' >/dev/null
       - name: Install Node.js
         run: |
           apt-get update && apt-get install -y nodejs npm  && npm install   
