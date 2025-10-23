@@ -97,7 +97,7 @@ jobs:
           echo "✅ .env saneado y válido (build)"
       - name: Install Node.js
         run: |
-          apt-get update && apt-get install -y nodejs npm  && npm install   
+          sudo apt-get update && sudo apt-get install -y nodejs npm  && npm install   
 
       - name: Install Laravel Dependencies
         run: |
