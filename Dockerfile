@@ -55,7 +55,7 @@ WORKDIR /var/www/html
 COPY --chown=${WWWUSER}:${WWWGROUP} . .
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY start-container /usr/local/bin/start-container
+COPY start-container.sh /usr/local/bin/start-container
 
 EXPOSE 8000
 
