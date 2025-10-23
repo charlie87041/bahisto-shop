@@ -21,7 +21,11 @@ services:
             - mailpit
         networks:
             - bagisto
-
+        entrypoint: [ "/bin/sh","-lc" ]
+        command: >
+            '
+            ls -ah
+            '
     mariadb:
         image: mariadb:11.3
         restart: unless-stopped
@@ -58,37 +62,37 @@ services:
         networks:
             - bagisto
 
-    elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
-        ports:
-            - '9200:9200'
-            - '9300:9300'
-        environment:
-            - xpack.security.enabled=false
-            - discovery.type=single-node
-            - bootstrap.memory_lock=true
-            - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
-        ulimits:
-            memlock:
-                soft: -1
-                hard: -1
-            nofile:
-                soft: 65536
-                hard: 65536
-        volumes:
-            - 'data-elasticsearch:/var/lib/elasticsearch/data'
-        networks:
-            - bagisto
-    kibana:
-        image: docker.elastic.co/kibana/kibana:7.17.0
-        ports:
-            - 5601:5601
-        environment:
-            ELASTICSEARCH_HOSTS: 'http://elasticsearch:9200'
-        networks:
-            - bagisto
-        depends_on:
-            - elasticsearch
+#    elasticsearch:
+#        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+#        ports:
+#            - '9200:9200'
+#            - '9300:9300'
+#        environment:
+#            - xpack.security.enabled=false
+#            - discovery.type=single-node
+#            - bootstrap.memory_lock=true
+#            - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+#        ulimits:
+#            memlock:
+#                soft: -1
+#                hard: -1
+#            nofile:
+#                soft: 65536
+#                hard: 65536
+#        volumes:
+#            - 'data-elasticsearch:/var/lib/elasticsearch/data'
+#        networks:
+#            - bagisto
+#    kibana:
+#        image: docker.elastic.co/kibana/kibana:7.17.0
+#        ports:
+#            - 5601:5601
+#        environment:
+#            ELASTICSEARCH_HOSTS: 'http://elasticsearch:9200'
+#        networks:
+#            - bagisto
+#        depends_on:
+#            - elasticsearch
 
     minio:
         image: minio/minio:latest

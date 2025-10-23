@@ -15,9 +15,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare environment file
-        run: cp .env.develop .env
-
       - name: Inject secret environment variables
         run: |
           {
@@ -27,13 +24,7 @@ jobs:
             echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}";
           #  echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}";
           #  echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}";
-          } >> .env
-
-      - name: Install Laravel Dependencies
-        run: |
-          composer install --no-interaction --prefer-dist --no-progress --optimize-autoloader
-          php --ri soap >/dev/null || (echo "SOAP not enabled" && exit 1)
-          composer update --no-interaction --with-all-dependencies    
+          } >> .env 
 
       - name: Generate key
         run:  php artisan key:generate

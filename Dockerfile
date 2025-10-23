@@ -45,6 +45,9 @@ RUN apt-get update \
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# Dependencias de PHP (no fallar si falta lock en build)
+RUN composer install --no-dev --prefer-dist --no-interaction --no-progress || true
+
 RUN groupadd --force -g ${WWWGROUP} www-user \
     && useradd -ms /bin/bash --no-user-group -g ${WWWGROUP} -u ${WWWUSER} www-user \
     && usermod -aG www-data www-user \
