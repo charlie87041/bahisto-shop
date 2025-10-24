@@ -56,7 +56,12 @@ WORKDIR /var/www/html
 COPY --chown=${WWWUSER}:${WWWGROUP} . .
 
 
-RUN composer install --no-dev --prefer-dist --no-interaction --no-progress
+RUN if [ ! -d vendor ]; then \
+        echo "Composer dependencies were not found in the image."; \
+        echo "Make sure 'composer install' runs before building so vendor is included in the context."; \
+        exit 1; \
+    fi \
+    && chown -R ${WWWUSER}:${WWWGROUP} vendor bootstrap/cache storage
 
 COPY --chown=${WWWUSER}:${WWWGROUP} supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY  --chown=${WWWUSER}:${WWWGROUP} start-container.sh /usr/local/bin/start-container
