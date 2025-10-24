@@ -55,13 +55,8 @@ WORKDIR /var/www/html
 
 COPY --chown=${WWWUSER}:${WWWGROUP} . .
 
-RUN composer install \
-        --no-dev \
-        --prefer-dist \
-        --no-interaction \
-        --no-progress \
-        --optimize-autoloader \
-    && chown -R ${WWWUSER}:${WWWGROUP} vendor bootstrap/cache storage
+
+RUN composer install --no-dev --prefer-dist --no-interaction --no-progress
 
 COPY --chown=${WWWUSER}:${WWWGROUP} supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY  --chown=${WWWUSER}:${WWWGROUP} start-container.sh /usr/local/bin/start-container
