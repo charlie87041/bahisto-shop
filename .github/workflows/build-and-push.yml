@@ -43,6 +43,7 @@ jobs:
           rsync -a \
             --exclude .git \
             --exclude build-context \
+            --exclude composer.lock \
             ./ build-context/
           if [ ! -f build-context/.env ]; then
             echo "::error::.env file was not copied into the Docker build context"

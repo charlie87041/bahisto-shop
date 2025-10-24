@@ -31,6 +31,7 @@ RUN apt-get update \
         exif \
         intl \
         pcntl \
+        calendar \
         pdo_mysql \
         zip \
         gd \
