@@ -45,8 +45,6 @@ RUN apt-get update \
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Dependencias de PHP (no fallar si falta lock en build)
-RUN composer install --no-dev --prefer-dist --no-interaction --no-progress || true
 
 RUN groupadd --force -g ${WWWGROUP} www-user \
     && useradd -ms /bin/bash --no-user-group -g ${WWWGROUP} -u ${WWWUSER} www-user \
@@ -56,6 +54,14 @@ RUN groupadd --force -g ${WWWGROUP} www-user \
 WORKDIR /var/www/html
 
 COPY --chown=${WWWUSER}:${WWWGROUP} . .
+
+RUN composer install \
+        --no-dev \
+        --prefer-dist \
+        --no-interaction \
+        --no-progress \
+        --optimize-autoloader \
+    && chown -R ${WWWUSER}:${WWWGROUP} vendor bootstrap/cache storage
 
 COPY --chown=${WWWUSER}:${WWWGROUP} supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY  --chown=${WWWUSER}:${WWWGROUP} start-container.sh /usr/local/bin/start-container
