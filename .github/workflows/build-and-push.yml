@@ -25,6 +25,7 @@ jobs:
             echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}";
             echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}";
             echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}";
+            echo "APP_KEY=${{ secrets.APP_KEY }}";
           #  echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}";
           #  echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}";
           } >> .env 
@@ -34,8 +35,6 @@ jobs:
           php --ri soap >/dev/null || (echo "SOAP not enabled" && exit 1)
           composer update --no-interaction --with-all-dependencies    
 
-      - name: Generate key
-        run:  php artisan key:generate
 
       - name: Prepare Docker build context
         run: |
@@ -43,12 +42,7 @@ jobs:
           rsync -a \
             --exclude .git \
             --exclude build-context \
-            --exclude composer.lock \
             ./ build-context/
-          if [ ! -f build-context/.env ]; then
-            echo "::error::.env file was not copied into the Docker build context"
-            exit 1
-          fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3

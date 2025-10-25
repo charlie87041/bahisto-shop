@@ -1,6 +1,7 @@
 
 composer dump-autoload --optimize
 php artisan optimize:clear
+php artisan migrate
 
 # Permisos runtime
 chown -R www-user:www-data storage bootstrap/cache || true
