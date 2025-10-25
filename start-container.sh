@@ -1,4 +1,4 @@
-
+cp .env.deploy .env
 composer dump-autoload --optimize
 php artisan optimize:clear
 php artisan migrate

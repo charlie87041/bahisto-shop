@@ -28,7 +28,7 @@ jobs:
             echo "APP_KEY=${{ secrets.APP_KEY }}";
           #  echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}";
           #  echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}";
-          } >> .env 
+          } >> .env.deploy
       - name: Install Laravel Dependencies
         run: |
           composer install --no-interaction --prefer-dist --no-progress --optimize-autoloader
