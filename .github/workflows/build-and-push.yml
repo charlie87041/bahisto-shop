@@ -33,7 +33,9 @@ jobs:
         run: |
           composer install --no-interaction --prefer-dist --no-progress --optimize-autoloader
           php --ri soap >/dev/null || (echo "SOAP not enabled" && exit 1)
-          composer update --no-interaction --with-all-dependencies    
+          composer update --no-interaction --with-all-dependencies
+      - name: Install octane Laravel Dependencies
+        run: php artisan octane:install --server=roadrunner --no-interaction
 
 
       - name: Prepare Docker build context
@@ -42,6 +44,7 @@ jobs:
           rsync -a \
             --exclude .git \
             --exclude build-context \
+            --exclude composer.lock \
             ./ build-context/
 
       - name: Set up Docker Buildx
