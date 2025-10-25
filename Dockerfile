@@ -55,7 +55,7 @@ RUN groupadd --force -g ${WWWGROUP} www-user \
 WORKDIR /var/www/html
 
 COPY --chown=${WWWUSER}:${WWWGROUP} . .
-RUN ls -ah
+RUN ls -ah vendor
 #RUN composer install --no-dev --prefer-dist --no-interaction --no-progress
 RUN  chown -R ${WWWUSER}:${WWWGROUP} vendor bootstrap/cache storage
 
