@@ -34,6 +34,7 @@ jobs:
           composer install --no-interaction --prefer-dist --no-progress --optimize-autoloader
           php --ri soap >/dev/null || (echo "SOAP not enabled" && exit 1)
           composer update --no-interaction --with-all-dependencies
+
       - name: Install octane Laravel Dependencies
         run: php artisan octane:install --server=roadrunner --no-interaction
 
