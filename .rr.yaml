@@ -1,0 +1,8 @@
+rpc:
+  listen: "127.0.0.1:6001"   # <— REQUIRED so Octane sees rpcPort
+
+server:
+  command: "php -dopcache.enable=1 -dopcache.enable_cli=1 public/index.php"
+
+http:
+  address: "0.0.0.0:8000"
