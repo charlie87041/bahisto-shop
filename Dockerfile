@@ -56,6 +56,8 @@ WORKDIR /var/www/html
 
 COPY --chown=${WWWUSER}:${WWWGROUP} . .
 
+RUN test -f .env || (echo ".env missing right after COPY" && ls -la && exit 1)
+
 
 RUN if [ ! -d vendor ]; then \
         echo "Composer dependencies were not found in the image."; \
