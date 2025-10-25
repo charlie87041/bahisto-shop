@@ -11,4 +11,4 @@ if [ ! -f rr.yaml ] && [ ! -f .rr.yaml ] && [ ! -f .rr.yml ] && [ ! -f rr.yml ];
   echo "[INIT] Generating rr.yaml via octane:install..."
   php artisan octane:install --server=roadrunner --no-interaction
 fi
-exec php artisan octane:start --server=swoole --host=0.0.0.0 --port=8000
+exec php artisan octane:start --server=roadrunner --host=0.0.0.0 --port=8000
