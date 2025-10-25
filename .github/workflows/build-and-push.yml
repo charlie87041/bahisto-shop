@@ -15,9 +15,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare environment file
-        run: cp .env.develop .env
-
       - name: Inject secret environment variables
         run: |
           {
@@ -28,7 +25,11 @@ jobs:
             echo "APP_KEY=${{ secrets.APP_KEY }}";
           #  echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}";
           #  echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}";
-          } >> .env.deploy
+          } >> .env.develop
+
+      - name: Prepare environment file
+        run: cp .env.develop .env
+
       - name: Install Laravel Dependencies
         run: |
           composer install --no-interaction --prefer-dist --no-progress --optimize-autoloader
