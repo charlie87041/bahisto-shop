@@ -5,7 +5,6 @@ services:
     laravel.test:
         image: kanonhian/bagisto-shop:latest
         container_name: bahisto-app
-        restart: unless-stopped
         working_dir: /var/www/html
         ports:
             - "${APP_PORT:-8000}:8000"
