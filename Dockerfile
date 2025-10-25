@@ -52,8 +52,8 @@ WORKDIR /var/www/html
 # (If you build in CI, prefer a .dockerignore to skip node_modules/vendor)
 COPY --chown=${WWWUSER}:${WWWGROUP} . .
 
-# If you want to install deps at build time, uncomment:
-# RUN composer install --no-dev --prefer-dist --no-interaction --no-progress
+# FOR MINIO INCOMPATIBILITIES
+RUN  composer require league/flysystem-aws-s3-v3:^3.0 --no-interaction --with-all-dependencies --ignore-platform-reqs
 
 # Ensure runtime perms (keep writable by app)
 RUN chown -R ${WWWUSER}:${WWWGROUP} vendor bootstrap/cache storage
