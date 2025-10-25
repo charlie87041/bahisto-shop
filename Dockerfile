@@ -55,7 +55,8 @@ RUN groupadd --force -g ${WWWGROUP} www-user \
 WORKDIR /var/www/html
 
 COPY --chown=${WWWUSER}:${WWWGROUP} . .
-
+RUN ls -ah
+RUN composer install --no-dev --prefer-dist --no-interaction --no-progress
 RUN  chown -R ${WWWUSER}:${WWWGROUP} vendor bootstrap/cache storage
 
 COPY --chown=${WWWUSER}:${WWWGROUP} supervisord.conf /etc/supervisor/conf.d/supervisord.conf
