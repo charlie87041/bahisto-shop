@@ -69,5 +69,5 @@ EXPOSE 8000
 
 USER ${WWWUSER}
 
-ENTRYPOINT: [ "/bin/sh","-lc" ]
+ENTRYPOINT [ "/bin/sh","-lc" ]
 CMD ["start-container"]
