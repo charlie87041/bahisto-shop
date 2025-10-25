@@ -11,6 +11,4 @@ if [ ! -f rr.yaml ] && [ ! -f .rr.yaml ] && [ ! -f .rr.yml ] && [ ! -f rr.yml ];
   echo "[INIT] Generating rr.yaml via octane:install..."
   php artisan octane:install --server=roadrunner --no-interaction
 fi
-
-# Lanza supervisor (arranca Octane/colas/schedule)
-exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+exec php artisan octane:start --server=swoole --host=0.0.0.0 --port=8000
