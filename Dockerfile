@@ -26,6 +26,13 @@ RUN apk add --no-cache \
     && apk add --no-cache --virtual .build-deps \
       build-base autoconf linux-headers
 
+# system deps for gd
+RUN apk add --no-cache \
+    freetype-dev \
+    libjpeg-turbo-dev \
+    libpng-dev \
+    libwebp-dev
+
 # ---- PHP extensions (core) ----
 # gd needs explicit configure flags for JPEG/Freetype on Alpine
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
